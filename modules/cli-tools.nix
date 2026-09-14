@@ -9,7 +9,14 @@
 
   programs.tmux.enable = true;
 
+  # neovim stays installed but no longer owns $EDITOR -- plain vim
+  # (programs.vim below) is the default editor now.
   programs.neovim = {
+    enable = true;
+    defaultEditor = false;
+  };
+
+  programs.vim = {
     enable = true;
     defaultEditor = true;
   };
@@ -37,6 +44,5 @@
     less
     btop
     fastfetch
-    vim # plain vim, alongside neovim (which stays $EDITOR via defaultEditor above)
   ];
 }
