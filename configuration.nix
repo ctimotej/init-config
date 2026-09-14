@@ -18,6 +18,7 @@
       ./modules/enterprise-auth.nix
       ./modules/desktop-sway.nix
       ./modules/desktop-apps.nix
+      ./modules/bluetooth.nix
       ./modules/audio.nix
       ./modules/laptop-power.nix
       ./modules/security-credentials.nix

@@ -21,9 +21,13 @@
     defaultEditor = true;
   };
 
-  # Oh My Zsh on top of the plain zsh enabled above.
+  # Oh My Zsh on top of the plain zsh enabled above. Theme is explicit
+  # rather than left to oh-my-zsh.sh's own internal fallback -- robbyrussell
+  # is the classic default (colored git-aware prompt with the arrow) that
+  # "a standard omz installation" usually means.
   programs.zsh.ohMyZsh = {
     enable = true;
+    theme = "robbyrussell";
     plugins = [ "git" ]; # git is already installed; add more here as wanted
   };
 
