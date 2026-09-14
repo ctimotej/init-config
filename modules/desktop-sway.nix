@@ -9,9 +9,21 @@
   programs.sway.enable = true;
 
   # Sway/wlroots doesn't read services.xserver.xkb.* (that's an X11-only
-  # config path); libxkbcommon does fall back to these env vars for any
-  # keyboard with no per-device override, so this keeps the Wayland session
-  # on the same DE/nodeadkeys layout declared in configuration.nix.
+  # config path), and the XKB_DEFAULT_* env var fallback below isn't
+  # reliably honoured by sway's own keyboard handling in practice -- so set
+  # it directly where sway actually looks. The stock config sway ships
+  # (nixpkgs patches it to `include /etc/sway/config.d/*`) picks this up
+  # automatically as long as ~/.config/sway/config doesn't exist/override
+  # it, which is the case here since there's no per-user dotfile management.
+  environment.etc."sway/config.d/keyboard.conf".text = ''
+    input "type:keyboard" {
+        xkb_layout "de"
+        xkb_variant "nodeadkeys"
+    }
+  '';
+
+  # Kept as a secondary fallback for XWayland/other Wayland clients that do
+  # consult libxkbcommon's env-var defaults directly.
   environment.sessionVariables = {
     XKB_DEFAULT_LAYOUT = "de";
     XKB_DEFAULT_VARIANT = "nodeadkeys";

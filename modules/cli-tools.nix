@@ -14,6 +14,12 @@
     defaultEditor = true;
   };
 
+  # Oh My Zsh on top of the plain zsh enabled above.
+  programs.zsh.ohMyZsh = {
+    enable = true;
+    plugins = [ "git" ]; # git is already installed; add more here as wanted
+  };
+
   environment.systemPackages = with pkgs; [
     ripgrep
     fd
@@ -31,5 +37,6 @@
     less
     btop
     fastfetch
+    vim # plain vim, alongside neovim (which stays $EDITOR via defaultEditor above)
   ];
 }
