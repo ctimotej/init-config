@@ -17,6 +17,7 @@
       ./modules/networking-tools.nix
       ./modules/enterprise-auth.nix
       ./modules/desktop-sway.nix
+      ./modules/desktop-apps.nix
       ./modules/audio.nix
       ./modules/laptop-power.nix
       ./modules/security-credentials.nix
@@ -59,7 +60,14 @@
 
   # Configure keymap in X11
   services.xserver.xkb.layout = "de";
+  services.xserver.xkb.variant = "nodeadkeys";
   services.xserver.xkb.options = "eurosign:e,caps:escape";
+
+  # Derive the virtual-console (TTY + initrd) keymap from the xkb settings
+  # above, so the LUKS unlock prompt uses the same DE/nodeadkeys layout as
+  # the desktop instead of defaulting to "us". This also carries the
+  # caps:escape option into the console/LUKS prompt.
+  console.useXkbConfig = true;
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;

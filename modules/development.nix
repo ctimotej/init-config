@@ -22,5 +22,7 @@
 
     shellcheck
     pre-commit
+
+    vscode # unfree; see modules/nix-tooling.nix for the allowUnfreePredicate entry
   ];
 }

@@ -8,6 +8,15 @@
 {
   programs.sway.enable = true;
 
+  # Sway/wlroots doesn't read services.xserver.xkb.* (that's an X11-only
+  # config path); libxkbcommon does fall back to these env vars for any
+  # keyboard with no per-device override, so this keeps the Wayland session
+  # on the same DE/nodeadkeys layout declared in configuration.nix.
+  environment.sessionVariables = {
+    XKB_DEFAULT_LAYOUT = "de";
+    XKB_DEFAULT_VARIANT = "nodeadkeys";
+  };
+
   xdg.portal = {
     enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-wlr ];
