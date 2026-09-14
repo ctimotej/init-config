@@ -29,9 +29,10 @@
     '';
   };
 
-  # --- LibreWolf ---
+  # --- LibreWolf, Dolphin (KDE's file manager) ---
   environment.systemPackages = [
     pkgs.librewolf
+    pkgs.kdePackages.dolphin
   ];
 
   # --- KDE Connect ---

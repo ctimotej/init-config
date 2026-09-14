@@ -29,10 +29,27 @@
     XKB_DEFAULT_VARIANT = "nodeadkeys";
   };
 
+  # xdg-desktop-portal-wlr only implements Screenshot/ScreenCast -- it has
+  # no FileChooser (or most other) portal backend. Without one, any "Save
+  # As"/download-location dialog that goes through the portal system (e.g.
+  # Discord, being a sandboxed Flatpak) has nothing to answer it and just
+  # fails/hangs. xdg-desktop-portal-gtk fills that gap; nixpkgs' own
+  # assertion for xdg.portal.extraPortals recommends exactly this pairing.
   xdg.portal = {
     enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-wlr ];
+    extraPortals = [
+      pkgs.xdg-desktop-portal-wlr
+      pkgs.xdg-desktop-portal-gtk
+    ];
   };
+
+  # Make sure ~/Downloads actually exists -- there's no display manager or
+  # xdg-user-dirs autostart wired up in this minimal Sway setup to create it
+  # on first login, and both browsers and portal-mediated downloads assume
+  # it's there.
+  systemd.tmpfiles.rules = [
+    "d /home/alexis/Downloads 0755 alexis users -"
+  ];
 
   # swaylock needs its own PAM service; without this it can be bypassed
   # since PAM falls back to an "always succeeds" default for unknown
