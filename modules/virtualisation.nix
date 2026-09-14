@@ -10,10 +10,10 @@
 
   virtualisation.libvirtd = {
     enable = true;
-    qemu = {
-      swtpm.enable = true;
-      ovmf.enable = true; # UEFI firmware for guests
-    };
+    qemu.swtpm.enable = true;
+    # No `qemu.ovmf.enable` here: as of nixos-26.05 that submodule has been
+    # removed from the libvirtd module (setting it now trips a build
+    # assertion) because OVMF firmware images ship by default with qemu.
   };
   programs.virt-manager.enable = true;
 
