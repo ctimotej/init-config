@@ -9,9 +9,22 @@
 
   programs.tmux.enable = true;
 
+  # neovim stays installed but no longer owns $EDITOR -- plain vim
+  # (programs.vim below) is the default editor now.
   programs.neovim = {
     enable = true;
+    defaultEditor = false;
+  };
+
+  programs.vim = {
+    enable = true;
     defaultEditor = true;
+  };
+
+  # Oh My Zsh on top of the plain zsh enabled above.
+  programs.zsh.ohMyZsh = {
+    enable = true;
+    plugins = [ "git" ]; # git is already installed; add more here as wanted
   };
 
   environment.systemPackages = with pkgs; [
