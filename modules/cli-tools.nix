@@ -30,5 +30,6 @@
     which
     less
     btop
+    fastfetch
   ];
 }
