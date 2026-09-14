@@ -8,6 +8,20 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+
+      ./modules/cli-tools.nix
+      ./modules/development.nix
+      ./modules/git.nix
+      ./modules/devops-cloud.nix
+      ./modules/virtualisation.nix
+      ./modules/networking-tools.nix
+      ./modules/enterprise-auth.nix
+      ./modules/desktop-sway.nix
+      ./modules/audio.nix
+      ./modules/laptop-power.nix
+      ./modules/security-credentials.nix
+      ./modules/storage-diagnostics.nix
+      ./modules/nix-tooling.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -50,13 +64,8 @@
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 
-  # Enable sound.
+  # Enable sound. (Full PipeWire + WirePlumber config lives in modules/audio.nix.)
   # services.pulseaudio.enable = true;
-  # OR
-  services.pipewire = {
-    enable = true;
-    pulse.enable = true;
-  };
 
   # Enable touchpad support (enabled default in most desktopManager).
   services.libinput.enable = true;
@@ -126,9 +135,13 @@ users.users.alexis = {
   isNormalUser = true;
   extraGroups = [ "wheel" "networkmanager" ];
   initialPassword = "nixos";
+  shell = pkgs.zsh;
 };
 
 services.openssh.enable = true;
+
+# zram swap (no swap partition/file exists on disk; see hardware-configuration.nix).
+zramSwap.enable = true;
 
 boot.initrd.prepend = [ "${./acpi-ddnt.cpio}" ];
 
