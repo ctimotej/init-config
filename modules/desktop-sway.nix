@@ -43,12 +43,20 @@
     ];
   };
 
-  # Make sure ~/Downloads actually exists -- there's no display manager or
-  # xdg-user-dirs autostart wired up in this minimal Sway setup to create it
-  # on first login, and both browsers and portal-mediated downloads assume
-  # it's there.
-  systemd.tmpfiles.rules = [
-    "d /home/alexis/Downloads 0755 alexis users -"
+  # Make sure the usual home folders actually exist -- there's no
+  # xdg-user-dirs autostart wired up in this minimal Sway setup to create
+  # them on first login, and browsers/apps assume at least Downloads is
+  # there. These aren't the Linux XDG-standard names (that'd be "Videos",
+  # not "Movies", and there's no standard "Developer"/"Public"/"Sites") --
+  # named to match what was actually asked for.
+  systemd.tmpfiles.rules = map (dir: "d /home/alexis/${dir} 0755 alexis users -") [
+    "Downloads"
+    "Music"
+    "Movies"
+    "Pictures"
+    "Developer"
+    "Public"
+    "Sites"
   ];
 
   # swaylock needs its own PAM service; without this it can be bypassed
