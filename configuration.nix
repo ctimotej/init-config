@@ -25,6 +25,7 @@
       ./modules/security-credentials.nix
       ./modules/storage-diagnostics.nix
       ./modules/nix-tooling.nix
+      ./modules/nix-ld.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
